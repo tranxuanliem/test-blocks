@@ -5,12 +5,21 @@ import { FaustProvider } from '@faustwp/core';
 import '@faustwp/core/dist/css/toolbar.css';
 import '../styles/global.scss';
 
-export default function MyApp({ Component, pageProps }) {
-  const router = useRouter();
+import { WordPressBlocksProvider } from '@faustwp/blocks';
+import blocks from '../wp-blocks';
 
-  return (
-    <FaustProvider pageProps={pageProps}>
-      <Component {...pageProps} key={router.asPath} />
-    </FaustProvider>
-  );
+export default function MyApp({ Component, pageProps }) {
+    const router = useRouter();
+
+    return (
+        <FaustProvider pageProps={pageProps}>
+            <WordPressBlocksProvider
+                config={{
+                    blocks,
+                }}
+            >
+                <Component {...pageProps} key={router.asPath} />
+            </WordPressBlocksProvider>
+        </FaustProvider>
+    );
 }
